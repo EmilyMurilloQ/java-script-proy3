@@ -7,7 +7,7 @@ const ProductDetail = ({ products, onAddToCart }) => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   
-  const product = products.find(p => p.id === parseInt(id));
+  const product = products.find(p => p.id === id);
 
   if (!product) {
     return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItem from '../components/CartItem';
-import '../styles/Pages.css';
 
 const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
   const navigate = useNavigate();
@@ -16,11 +15,14 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="cart-page">
-        <div className="empty-cart">
-          <h2>Tu carrito está vacío</h2>
-          <p>Parece que aún no has agregado ningún producto</p>
-          <Link to="/products" className="btn btn-primary">
+      <div className="max-w-6xl mx-auto px-4 py-16">
+        <div className="text-center py-16 px-4 bg-gray-100 rounded-lg">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Tu carrito está vacío</h2>
+          <p className="text-gray-600 mb-8">Parece que aún no has agregado ningún producto</p>
+          <Link
+            to="/products"
+            className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-green-600 transition-colors"
+          >
             Continuar Comprando
           </Link>
         </div>
@@ -29,11 +31,11 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
   }
 
   return (
-    <div className="cart-page">
-      <div className="cart-container">
-        <div className="cart-items">
-          <h1>Carrito de Compras</h1>
-          <div className="items-list">
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">Carrito de Compras</h1>
+          <div className="flex flex-col gap-4">
             {cartItems.map((item) => (
               <CartItem
                 key={item.id}
@@ -45,45 +47,50 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
           </div>
         </div>
 
-        <div className="cart-summary">
-          <h2>Resumen del Pedido</h2>
-          
-          <div className="summary-item">
+        <div className="bg-gray-100 p-6 rounded-lg h-fit lg:sticky lg:top-20">
+          <h2 className="text-lg font-bold mb-6">Resumen del Pedido</h2>
+
+          <div className="flex justify-between mb-4 text-sm">
             <span>Subtotal:</span>
             <span>${subtotal.toFixed(2)}</span>
           </div>
-          
-          <div className="summary-item">
+
+          <div className="flex justify-between mb-4 text-sm">
             <span>Impuesto (8%):</span>
             <span>${tax.toFixed(2)}</span>
           </div>
-          
-          <div className="summary-item">
+
+          <div className="flex justify-between mb-4 text-sm">
             <span>Envío:</span>
             <span>{shipping === 0 ? 'Gratis' : `$${shipping.toFixed(2)}`}</span>
           </div>
 
           {shipping === 0 && (
-            <p className="free-shipping-message">✓ Envío gratis (compra mayor a $50)</p>
+            <p className="bg-green-100 text-green-800 px-2 py-2 rounded text-sm mb-2">
+              ✓ Envío gratis (compra mayor a $50)
+            </p>
           )}
-          
-          <div className="summary-total">
+
+          <div className="flex justify-between font-bold text-lg my-4 py-4 border-t-2 border-b-2 border-border">
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
           </div>
 
-          <button 
-            className="btn btn-primary btn-large"
+          <button
             onClick={handleProceedToCheckout}
+            className="w-full bg-primary text-white py-4 rounded-lg font-bold hover:bg-green-600 transition-colors mb-3"
           >
             Proceder al Pago
           </button>
 
-          <Link to="/products" className="btn btn-secondary btn-large">
+          <Link
+            to="/products"
+            className="block w-full text-center bg-blue-500 text-white py-4 rounded-lg font-bold hover:bg-blue-600 transition-colors"
+          >
             Continuar Comprando
           </Link>
 
-          <div className="cart-info">
+          <div className="mt-6 text-xs text-gray-500 space-y-2">
             <p>📦 Envío a cualquier parte del país</p>
             <p>🔒 Pago 100% seguro</p>
             <p>↩️ Devuelve en 30 días sin preguntas</p>

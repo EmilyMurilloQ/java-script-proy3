@@ -1,43 +1,51 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/ProductCard.css';
 
 const ProductCard = ({ product, onAddToCart }) => {
   return (
-    <div className="product-card">
-      <div className="product-image">
-        <img src={product.image} alt={product.name} />
+    <div className="border border-border rounded-lg overflow-hidden bg-white h-full flex flex-col transition-all hover:shadow-lg hover:-translate-y-0.5">
+      <div className="relative h-48 bg-gray-100 overflow-hidden">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        />
         {product.discount && (
-          <span className="discount-badge">-{product.discount}%</span>
+          <span className="absolute top-2.5 right-2.5 bg-red-500 text-white px-2.5 py-1 rounded font-bold text-xs">
+            -{product.discount}%
+          </span>
         )}
       </div>
-      
-      <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
-        <p className="product-category">{product.category}</p>
-        
-        <div className="product-rating">
+
+      <div className="p-4 flex flex-col flex-1">
+        <h3 className="font-bold text-gray-800 mb-1 leading-snug">{product.name}</h3>
+        <p className="text-gray-400 text-sm mb-2">{product.category}</p>
+
+        <div className="flex items-center gap-2 mb-2 text-sm">
           {'⭐'.repeat(product.rating)}
-          <span className="rating-text">({product.reviews} reseñas)</span>
+          <span className="text-gray-400 text-xs">({product.reviews} reseñas)</span>
         </div>
-        
-        <p className="product-description">{product.description}</p>
-        
-        <div className="product-footer">
-          <div className="product-price">
+
+        <p className="text-gray-500 text-sm mb-2 flex-1 line-clamp-2">{product.description}</p>
+
+        <div className="flex flex-col gap-4 mt-auto">
+          <div className="flex items-center gap-2">
             {product.originalPrice && (
-              <span className="original-price">${product.originalPrice}</span>
+              <span className="line-through text-gray-400 text-sm">${product.originalPrice}</span>
             )}
-            <span className="current-price">${product.price}</span>
+            <span className="text-xl font-bold text-primary">${product.price}</span>
           </div>
-          
-          <div className="product-actions">
-            <Link to={`/product/${product.id}`} className="btn btn-secondary">
+
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              to={`/product/${product.id}`}
+              className="bg-blue-500 text-white text-center py-2 rounded font-bold text-sm hover:bg-blue-600 transition-colors"
+            >
               Ver
             </Link>
             <button
-              className="btn btn-primary"
               onClick={() => onAddToCart(product)}
+              className="bg-primary text-white py-2 rounded font-bold text-sm hover:bg-green-600 transition-colors"
             >
               Agregar
             </button>

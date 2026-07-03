@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -8,11 +8,24 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
-import { mockProducts } from './data/products';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
+import { getProducts } from './services/productService';
 import './App.css';
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [productsError, setProductsError] = useState(null);
+
+  useEffect(() => {
+    getProducts()
+      .then((data) => setProducts(data))
+      .catch(() => setProductsError('No se pudo cargar el catálogo. Intenta de nuevo más tarde.'))
+      .finally(() => setLoadingProducts(false));
+  }, []);
 
   const handleAddToCart = (product) => {
     const existingItem = cart.find(item => item.id === product.id);
@@ -60,49 +73,58 @@ function App() {
         <Navbar cartCount={cartCount} />
         
         <main className="app-main">
-          <Routes>
-            <Route 
-              path="/" 
-              element={<Home products={mockProducts} onAddToCart={handleAddToCart} />} 
-            />
-            <Route 
-              path="/products" 
-              element={<Products products={mockProducts} onAddToCart={handleAddToCart} />} 
-            />
-            <Route 
-              path="/product/:id" 
-              element={<ProductDetail products={mockProducts} onAddToCart={handleAddToCart} />} 
-            />
-            <Route 
-              path="/cart" 
-              element={
-                <Cart 
-                  cartItems={cart}
-                  onUpdateQuantity={handleUpdateQuantity}
-                  onRemoveItem={handleRemoveFromCart}
-                  onCheckout={handleCheckout}
-                />
-              } 
-            />
-            <Route 
-              path="/checkout" 
-              element={
-                <Checkout 
-                  cartItems={cart}
-                  total={calculateCartTotal()}
-                />
-              } 
-            />
-            <Route 
-              path="/order-confirmation/:orderNumber" 
-              element={
-                <OrderConfirmation 
-                  cartItems={cart}
-                  total={calculateCartTotal()}
-                />
-              } 
-            />
-          </Routes>
+          {loadingProducts ? (
+            <p className="text-center p-3">Cargando catálogo...</p>
+          ) : productsError ? (
+            <p className="text-center p-3">{productsError}</p>
+          ) : (
+            <Routes>
+              <Route
+                path="/"
+                element={<Home products={products} onAddToCart={handleAddToCart} />}
+              />
+              <Route
+                path="/products"
+                element={<Products products={products} onAddToCart={handleAddToCart} />}
+              />
+              <Route
+                path="/product/:id"
+                element={<ProductDetail products={products} onAddToCart={handleAddToCart} />}
+              />
+              <Route
+                path="/cart"
+                element={
+                  <Cart
+                    cartItems={cart}
+                    onUpdateQuantity={handleUpdateQuantity}
+                    onRemoveItem={handleRemoveFromCart}
+                    onCheckout={handleCheckout}
+                  />
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                  <Checkout
+                    cartItems={cart}
+                    total={calculateCartTotal()}
+                  />
+                }
+              />
+              <Route
+                path="/order-confirmation/:orderNumber"
+                element={
+                  <OrderConfirmation
+                    cartItems={cart}
+                    total={calculateCartTotal()}
+                  />
+                }
+              />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          )}
         </main>
 
         <Footer />
