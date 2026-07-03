@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -21,6 +21,9 @@ function App() {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState(null);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   useEffect(() => {
     getProducts()
       .then((data) => setProducts(data))
@@ -40,6 +43,9 @@ function App() {
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
+
+    setSelectedProduct(product);
+    setIsModalOpen(true);
   };
 
   const handleUpdateQuantity = (productId, newQuantity) => {
@@ -128,6 +134,37 @@ function App() {
             </Routes>
           )}
         </main>
+
+        {isModalOpen && selectedProduct && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3 className="modal-title">¡Producto añadido!</h3>
+              <p className="modal-message">Se ha agregado al carrito de compras.</p>
+              
+              <div className="modal-product-preview">
+                <img 
+                  src={selectedProduct.image || selectedProduct.imagenUrl} 
+                  alt={selectedProduct.name || selectedProduct.title} 
+                  className="modal-product-img" 
+                />
+                <div className="modal-product-info">
+                  <p className="modal-product-name">{selectedProduct.name || selectedProduct.title}</p>
+                  <span className="modal-product-category">{selectedProduct.category}</span>
+                  <p className="modal-product-price">${selectedProduct.price}</p>
+                </div>
+              </div>
+
+              <div className="modal-actions">
+                <button onClick={() => setIsModalOpen(false)} className="btn-secondary">
+                  Seguir comprando
+                </button>
+                <Link to="/cart" onClick={() => setIsModalOpen(false)} className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                  Ir al carrito
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         <Footer />
       </div>
