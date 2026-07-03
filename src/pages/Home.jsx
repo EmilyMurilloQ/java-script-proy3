@@ -54,12 +54,12 @@ const Home = ({ products, onAddToCart }) => {
                 >
                   Ir a la Tienda
                 </Link>
-                <a
-                  href="#solutions-section"
-                  className="inline-block border-2 border-gray-800 text-gray-800 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors text-center"
+                <Link
+                  to="/catalog"
+                  className="inline-block border-2 border-gray-800 text-gray-800 px-8 py-3 rounded-lg font-bold hover:bg-gray-900 hover:text-white transition-all duration-300 text-center shadow-sm"
                 >
-                  Ver Catálogo
-                </a>
+                  Ver Catálogo 
+                </Link>
               </div>
             </div>
             <div className="hidden md:block text-center">
@@ -138,9 +138,6 @@ const Home = ({ products, onAddToCart }) => {
                   </div>
 
                   <div className="p-4">
-                    <div className="text-center mb-3">
-                      <span className="text-3xl">💻</span>
-                    </div>
                     <h4 className="font-bold text-center mb-2 text-gray-900">{product.name}</h4>
                     <p className="text-gray-600 text-sm text-center mb-4 line-clamp-2">{product.description}</p>
 
