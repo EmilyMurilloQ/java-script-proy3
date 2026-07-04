@@ -48,6 +48,7 @@ const Footer = () => {
       <div className="bg-gray-900 text-center py-6 border-t border-gray-700">
         <p className="text-sm m-0">&copy; Ing. Keyla Mialu Jimenez Gallegos</p>
         <p className="text-sm m-0">&copy; Ing. Emily Ariana Murillo Quisp</p>
+        <p className="text-sm m-0">&copy; Ing. Luis Enrique Castro Garcia</p>
         <p className="text-sm m-0">&copy; Ing. José Gabriel García Huamán</p>
       </div>
     </footer>
