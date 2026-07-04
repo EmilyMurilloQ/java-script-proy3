@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+#  E-Commerce - Soft-Consultotes
+¡Bienvenido al repositorio de nuestra tienda online! Este es un proyecto de comercio electrónico desarrollado con **React**, estilizado con **Tailwind CSS**, y estructurado de forma modular para ofrecer una experiencia de usuario fluida, rápida y responsiva.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+El frontend está desplegado en **Netlify** y se conecta a un servidor/API alojado en **Render**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Características principales
 
-### `npm start`
+* **Catálogo completo de productos:** Filtros dinámicos por categorías, precios y búsqueda en tiempo real.
+* **Carrito de compras:** Adición, modificación de cantidades, aplicación de descuentos y eliminación de productos con persistencia de estado.
+* **Pasarela de simulación de pago:** Formulario de Checkout validado para simular la orden de compra.
+* **Enrutamiento dinámico:** Rutas protegidas y amigables utilizando `react-router-dom` (Página de detalles, carrito, confirmación, etc.).
+* **Diseño adaptativo (Responsive):** Experiencia visual optimizada para móviles, tablets y computadoras gracias a Tailwind CSS.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tecnologías utilizadas
 
-### `npm test`
+### Frontend
+* **React (Vite / CRA):** Librería principal para la interfaz de usuario.
+* **React Router DOM:** Manejo de rutas y navegación de la aplicación.
+* **Tailwind CSS:** Framework de estilos utilitarios para un diseño moderno y rápido.
+* **Axios / Fetch API:** Consumo de servicios y comunicación con el backend.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend & Despliegue
+* **Servidor en Render:** API encargada de proveer los datos de los productos y procesar las órdenes.
+* **Netlify:** Hosting e integración continua para el cliente de React.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Estructura del proyecto (Frontend)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
+src/
+├── assets/          # Imágenes, íconos y recursos estáticos
+├── components/      # Componentes reutilizables (Navbar, Footer, ProductCard, etc.)
+├── pages/           # Vistas principales de la aplicación (Home, Cart, Catalog, etc.)
+├── routes/          # Configuración y definición de rutas
+├── services/        # Archivos de comunicación con la API (productService.js)
+├── styles/          # Estilos globales y configuraciones de Tailwind
+├── App.jsx          # Componente principal y manejo del estado global
+└── main.jsx         # Punto de entrada de la aplicación
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+------------
