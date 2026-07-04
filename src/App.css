@@ -103,7 +103,7 @@ input, textarea, select {
 }
 
 .modal-title {
-  color: #10b981;
+  color: #1b1b1d;
   font-size: 1.5rem;
   font-weight: 800;
   margin-bottom: 8px;
@@ -147,7 +147,7 @@ input, textarea, select {
 
 .modal-product-price {
   font-weight: bold;
-  color: #10b981;
+  color: #5110b9;
   margin: 4px 0 0 0;
 }
 
@@ -173,7 +173,7 @@ input, textarea, select {
 }
 
 .btn-primary {
-  background: #10b981;
+  background: #4a4996;
   color: white;
   border: none;
   padding: 10px;
@@ -185,10 +185,34 @@ input, textarea, select {
 }
 
 .btn-primary:hover {
-  background: #059669;
+  background: #221a31;
 }
 
 @keyframes modalFadeIn {
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+
+.login-container {
+  min-height: calc(100vh - 70px); 
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  border-top: 4px solid #0d6efd !important; 
+}
+
+.input-group-text {
+  border-color: #dee2e6;
+}
+
+.form-control:focus {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.text-xs {
+  font-size: 0.8rem;
 }

@@ -44,6 +44,14 @@ const Navbar = ({ cartCount }) => {
           </li>
           <li style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
             <Link 
+              to="/login" 
+              className="text-gray-300 font-medium hover:text-cyan-400 transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 hover:after:w-full after:h-[2px] after:bg-cyan-400 after:transition-all after:duration-300 pb-1"
+            >
+              Login
+            </Link>
+          </li>
+          <li style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <Link 
               to="/cart" 
               className="text-gray-300 font-medium hover:text-cyan-400 transition-all duration-300 flex items-center gap-1 bg-gray-700/50 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-600 hover:border-cyan-500/50"
             >

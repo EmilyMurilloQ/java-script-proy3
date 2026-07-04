@@ -11,6 +11,7 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Catalog from './pages/catalog';
+import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import { getProducts } from './services/productService';
 import './App.css';
@@ -147,6 +148,7 @@ function App() {
               />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/catalog" element={<Catalog products={products} />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
