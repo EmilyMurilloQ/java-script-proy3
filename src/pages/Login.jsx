@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { demoUser } from '../utils/auth';
 
-const Login = () => {
+const Login = ({ onLogin, currentUser }) => {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [errorLogin, setErrorLogin] = useState(null);
@@ -9,6 +10,14 @@ const Login = () => {
   const [loginValidated, setLoginValidated] = useState(false);
   
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = location.state?.from || '/perfil';
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/perfil', { replace: true });
+    }
+  }, [currentUser, navigate]);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +34,8 @@ const Login = () => {
     setTimeout(() => {
       if (correo === 'user@gmail.com' && contrasena === '123456') {
         setCargando(false);
-        navigate('/products');
+        onLogin(demoUser);
+        navigate(redirectPath, { replace: true });
       } else {
         setCargando(false);
         setErrorLogin('Credenciales incorrectas. Inténtalo de nuevo.');
@@ -74,7 +84,9 @@ const Login = () => {
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide">
                 Contraseña
               </label>
-              <a href="#" className="text-xs text-blue-600 hover:underline">¿La olvidaste?</a>
+              <button type="button" className="text-xs text-blue-600 hover:underline">
+                ¿La olvidaste?
+              </button>
             </div>
             <div className="relative">
               <input 

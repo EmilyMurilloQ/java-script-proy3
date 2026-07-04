@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
@@ -12,8 +13,10 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Catalog from './pages/catalog';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import { getProducts } from './services/productService';
+import { clearUserSession, getStoredUser, saveUserSession } from './utils/auth';
 import './App.css';
 
 function App() {
@@ -22,6 +25,7 @@ function App() {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState(null);
   const [notification, setNotification] = useState('');
+  const [currentUser, setCurrentUser] = useState(() => getStoredUser());
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -80,6 +84,16 @@ function App() {
     console.log('Procesando pago de:', total);
   };
 
+  const handleLogin = (user) => {
+    saveUserSession(user);
+    setCurrentUser(user);
+  };
+
+  const handleLogout = () => {
+    clearUserSession();
+    setCurrentUser(null);
+  };
+
   const calculateCartTotal = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
@@ -96,7 +110,7 @@ function App() {
           </div>
         )}
 
-        <Navbar cartCount={cartCount} />
+        <Navbar cartCount={cartCount} currentUser={currentUser} onLogout={handleLogout} />
         
         <main className="app-main">
           {loadingProducts ? (
@@ -148,7 +162,15 @@ function App() {
               />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login onLogin={handleLogin} currentUser={currentUser} />} />
+              <Route
+                path="/perfil"
+                element={
+                  <ProtectedRoute user={currentUser}>
+                    <Profile user={currentUser} />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/catalog" element={<Catalog products={products} />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

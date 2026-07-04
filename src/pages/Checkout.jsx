@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getStoredUser, savePurchase } from '../utils/auth';
 
 const inputClass = 'w-full border border-border rounded px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-green-100';
 const labelClass = 'block mb-1 font-bold text-gray-800 text-sm';
@@ -89,6 +90,23 @@ const Checkout = ({ cartItems, total }) => {
 
     setErrors({});
     const newOrderNumber = `ORD-${Date.now()}`;
+    const currentUser = getStoredUser();
+
+    if (currentUser) {
+      savePurchase(currentUser.id, {
+        orderNumber: newOrderNumber,
+        date: new Date().toLocaleDateString('es-ES'),
+        status: 'Confirmado',
+        total: finalTotal,
+        items: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name || item.title,
+          quantity: item.quantity,
+          price: item.price
+        }))
+      });
+    }
+
     setOrderNumber(newOrderNumber);
     setOrderPlaced(true);
 
