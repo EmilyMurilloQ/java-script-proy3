@@ -6,6 +6,13 @@ const labelClass = 'block mb-1 font-bold text-gray-800 text-sm';
 
 const Checkout = ({ cartItems, total }) => {
   const navigate = useNavigate();
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const hasPromotion = cartItems.length >= 2;
+  const discount = hasPromotion ? subtotal * 0.15 : 0;
+  const discountedSubtotal = subtotal - discount;
+  const tax = discountedSubtotal * 0.08;
+  const shipping = discountedSubtotal > 50 ? 0 : 10;
+  const finalTotal = discountedSubtotal + tax + shipping;
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -166,6 +173,12 @@ const Checkout = ({ cartItems, total }) => {
             <fieldset className="border border-border rounded-lg p-6 mb-8">
               <legend className="px-2 font-bold text-gray-800">Información de Pago</legend>
 
+              <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+                {hasPromotion
+                  ? '🎉 Tu compra cumple con la promoción: 15% de descuento automático.'
+                  : 'Agrega 2 o más soluciones para recibir 15% de descuento automático.'}
+              </div>
+
               <div className="mb-4">
                 <label className={labelClass}>Método de Pago</label>
                 <div className="flex flex-col gap-3">
@@ -252,9 +265,24 @@ const Checkout = ({ cartItems, total }) => {
               )}
             </fieldset>
 
+            <div className="mt-6 rounded-lg border border-border bg-gray-50 p-4 text-sm text-gray-700">
+              <div className="flex justify-between mb-2">
+                <span>Subtotal:</span>
+                <span>${subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span>Descuento:</span>
+                <span>- ${discount.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between font-semibold text-gray-900">
+                <span>Total final:</span>
+                <span>${finalTotal.toFixed(2)}</span>
+              </div>
+            </div>
+
             <button
               type="submit"
-              className="w-full bg-primary text-white py-4 rounded-lg font-bold hover:bg-green-600 transition-colors"
+              className="mt-4 w-full bg-primary text-white py-4 rounded-lg font-bold hover:bg-green-600 transition-colors"
             >
               Completar Pedido
             </button>

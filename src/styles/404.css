@@ -1,0 +1,94 @@
+.error-wrapper {
+  overflow: hidden;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.tech-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridTravel 25s linear infinite;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+@keyframes gridTravel {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.card-clean-error {
+  max-width: 580px;
+  transition: transform 0.3s ease;
+}
+
+.fw-extrabold {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.lead-text {
+  line-height: 1.6;
+}
+
+.laptop-animation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140px;
+}
+
+.laptop-illustration {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laptop-shadow {
+  position: absolute;
+  bottom: 8px;
+  width: 140px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.18);
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.laptop-svg {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  height: auto;
+  animation: laptopFloat 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 10px 18px rgba(37, 99, 235, 0.15));
+}
+
+.laptop-body {
+  fill: #2563eb;
+}
+
+.laptop-screen {
+  fill: #eff6ff;
+}
+
+.laptop-base {
+  fill: #64748b;
+}
+
+@keyframes laptopFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+.btn-tech-glide:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+}

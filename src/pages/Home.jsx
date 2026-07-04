@@ -150,10 +150,7 @@ const Home = ({ products, onAddToCart }) => {
 
                     <div className="space-y-2">
                       <button
-                        onClick={() => {
-                          onAddToCart(product);
-                          alert(`${product.name} agregado al carrito!`);
-                        }}
+                        onClick={() => onAddToCart(product)}
                         className="w-full bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition-colors"
                       >
                         🛒 Añadir al Carrito

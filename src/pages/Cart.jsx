@@ -5,9 +5,12 @@ import CartItem from '../components/CartItem';
 const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
   const navigate = useNavigate();
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  const tax = subtotal * 0.08;
-  const shipping = subtotal > 50 ? 0 : 10;
-  const total = subtotal + tax + shipping;
+  const hasPromotion = cartItems.length >= 2;
+  const discount = hasPromotion ? subtotal * 0.15 : 0;
+  const discountedSubtotal = subtotal - discount;
+  const tax = discountedSubtotal * 0.08;
+  const shipping = discountedSubtotal > 50 ? 0 : 10;
+  const total = discountedSubtotal + tax + shipping;
 
   const handleProceedToCheckout = () => {
     navigate('/checkout');
@@ -53,6 +56,22 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
           <div className="flex justify-between mb-4 text-sm">
             <span>Subtotal:</span>
             <span>${subtotal.toFixed(2)}</span>
+          </div>
+
+          {hasPromotion && (
+            <div className="mb-4 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
+              🎉 Lleva 2 o más soluciones y recibe 15% de descuento automático.
+            </div>
+          )}
+
+          <div className="flex justify-between mb-4 text-sm">
+            <span>Descuento:</span>
+            <span>- ${discount.toFixed(2)}</span>
+          </div>
+
+          <div className="flex justify-between mb-4 text-sm">
+            <span>Subtotal con descuento:</span>
+            <span>${discountedSubtotal.toFixed(2)}</span>
           </div>
 
           <div className="flex justify-between mb-4 text-sm">
