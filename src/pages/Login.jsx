@@ -23,7 +23,7 @@ const Login = () => {
     setErrorLogin(null);
 
     setTimeout(() => {
-      if (correo === 'admin@empresa.com' && contrasena === '123456') {
+      if (correo === 'user@gmail.com' && contrasena === '123456') {
         setCargando(false);
         navigate('/products');
       } else {
