@@ -11,8 +11,7 @@ const Checkout = ({ cartItems, total }) => {
   const discount = hasPromotion ? subtotal * 0.15 : 0;
   const discountedSubtotal = subtotal - discount;
   const tax = discountedSubtotal * 0.08;
-  const shipping = discountedSubtotal > 50 ? 0 : 10;
-  const finalTotal = discountedSubtotal + tax + shipping;
+  const finalTotal = discountedSubtotal + tax;
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -29,6 +28,7 @@ const Checkout = ({ cartItems, total }) => {
 
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,10 +36,58 @@ const Checkout = ({ cartItems, total }) => {
       ...prev,
       [name]: value
     }));
+
+    setErrors(prev => ({
+      ...prev,
+      [name]: ''
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.firstName.trim()) newErrors.firstName = 'El nombre es obligatorio';
+    if (!formData.lastName.trim()) newErrors.lastName = 'El apellido es obligatorio';
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'El correo es obligatorio';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = 'Ingresa un correo válido';
+    }
+
+    if (!formData.phone.trim()) newErrors.phone = 'El teléfono es obligatorio';
+    if (!formData.address.trim()) newErrors.address = 'La dirección es obligatoria';
+    if (!formData.city.trim()) newErrors.city = 'La ciudad es obligatoria';
+    if (!formData.postalCode.trim()) newErrors.postalCode = 'El código postal es obligatorio';
+
+    if (formData.paymentMethod === 'credit-card') {
+      if (!formData.cardNumber.trim()) {
+        newErrors.cardNumber = 'El número de tarjeta es obligatorio';
+      } else if (!/^\d{13,19}$/.test(formData.cardNumber.replace(/\s+/g, ''))) {
+        newErrors.cardNumber = 'Número de tarjeta inválido';
+      }
+      if (!formData.expiryDate.trim()) {
+        newErrors.expiryDate = 'La fecha de vencimiento es obligatoria';
+      }
+      if (!formData.cvv.trim()) {
+        newErrors.cvv = 'El CVV es obligatorio';
+      } else if (!/^\d{3,4}$/.test(formData.cvv)) {
+        newErrors.cvv = 'CVV inválido';
+      }
+    }
+
+    return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
     const newOrderNumber = `ORD-${Date.now()}`;
     setOrderNumber(newOrderNumber);
     setOrderPlaced(true);
@@ -69,7 +117,7 @@ const Checkout = ({ cartItems, total }) => {
 
           <form onSubmit={handleSubmit}>
             <fieldset className="border border-border rounded-lg p-6 mb-8">
-              <legend className="px-2 font-bold text-gray-800">Información de Envío</legend>
+              <legend className="px-2 font-bold text-gray-800">Información de Facturación</legend>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="mb-4">
@@ -83,6 +131,7 @@ const Checkout = ({ cartItems, total }) => {
                     required
                     className={inputClass}
                   />
+                  {errors.firstName && <p className="text-red-600 text-sm mt-1">{errors.firstName}</p>}
                 </div>
 
                 <div className="mb-4">
@@ -96,6 +145,7 @@ const Checkout = ({ cartItems, total }) => {
                     required
                     className={inputClass}
                   />
+                  {errors.lastName && <p className="text-red-600 text-sm mt-1">{errors.lastName}</p>}
                 </div>
               </div>
 
@@ -111,6 +161,7 @@ const Checkout = ({ cartItems, total }) => {
                     required
                     className={inputClass}
                   />
+                  {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 <div className="mb-4">
@@ -124,6 +175,7 @@ const Checkout = ({ cartItems, total }) => {
                     required
                     className={inputClass}
                   />
+                  {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone}</p>}
                 </div>
               </div>
 
@@ -139,6 +191,7 @@ const Checkout = ({ cartItems, total }) => {
                   required
                   className={inputClass}
                 />
+                {errors.address && <p className="text-red-600 text-sm mt-1">{errors.address}</p>}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -153,6 +206,7 @@ const Checkout = ({ cartItems, total }) => {
                     required
                     className={inputClass}
                   />
+                  {errors.city && <p className="text-red-600 text-sm mt-1">{errors.city}</p>}
                 </div>
 
                 <div className="mb-4">
@@ -166,6 +220,7 @@ const Checkout = ({ cartItems, total }) => {
                     required
                     className={inputClass}
                   />
+                  {errors.postalCode && <p className="text-red-600 text-sm mt-1">{errors.postalCode}</p>}
                 </div>
               </div>
             </fieldset>
@@ -229,6 +284,7 @@ const Checkout = ({ cartItems, total }) => {
                       required={formData.paymentMethod === 'credit-card'}
                       className={inputClass}
                     />
+                    {errors.cardNumber && <p className="text-red-600 text-sm mt-1">{errors.cardNumber}</p>}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -244,6 +300,7 @@ const Checkout = ({ cartItems, total }) => {
                         required={formData.paymentMethod === 'credit-card'}
                         className={inputClass}
                       />
+                      {errors.expiryDate && <p className="text-red-600 text-sm mt-1">{errors.expiryDate}</p>}
                     </div>
 
                     <div className="mb-4">
@@ -259,6 +316,7 @@ const Checkout = ({ cartItems, total }) => {
                         maxLength="3"
                         className={inputClass}
                       />
+                      {errors.cvv && <p className="text-red-600 text-sm mt-1">{errors.cvv}</p>}
                     </div>
                   </div>
                 </>

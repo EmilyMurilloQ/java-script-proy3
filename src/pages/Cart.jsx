@@ -9,8 +9,7 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
   const discount = hasPromotion ? subtotal * 0.15 : 0;
   const discountedSubtotal = subtotal - discount;
   const tax = discountedSubtotal * 0.08;
-  const shipping = discountedSubtotal > 50 ? 0 : 10;
-  const total = discountedSubtotal + tax + shipping;
+  const total = discountedSubtotal + tax;
 
   const handleProceedToCheckout = () => {
     navigate('/checkout');
@@ -79,17 +78,6 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
             <span>${tax.toFixed(2)}</span>
           </div>
 
-          <div className="flex justify-between mb-4 text-sm">
-            <span>Envío:</span>
-            <span>{shipping === 0 ? 'Gratis' : `$${shipping.toFixed(2)}`}</span>
-          </div>
-
-          {shipping === 0 && (
-            <p className="bg-green-100 text-green-800 px-2 py-2 rounded text-sm mb-2">
-              ✓ Envío gratis (compra mayor a $50)
-            </p>
-          )}
-
           <div className="flex justify-between font-bold text-lg my-4 py-4 border-t-2 border-b-2 border-border">
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
@@ -110,9 +98,9 @@ const Cart = ({ cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
           </Link>
 
           <div className="mt-6 text-xs text-gray-500 space-y-2">
-            <p>📦 Envío a cualquier parte del país</p>
+            <p>� Acceso digital inmediato</p>
             <p>🔒 Pago 100% seguro</p>
-            <p>↩️ Devuelve en 30 días sin preguntas</p>
+            <p>↩️ Soporte y garantía incluida</p>
           </div>
         </div>
       </div>
